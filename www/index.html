@@ -28,22 +28,45 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+        <title>Mini ToDo</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+        <section id="container"></section>
+
+        <script id="titleTemplate" type="text/ractive">
+          <h1>Mini ToDo</h1>
+          <p>{{msg}}</p>
+          <label>Username</label> <input type="text" value="{{username}}"/><br/>
+          <label>Password</label> <input type="password" value="{{password}}"/><br/>
+          <button on-click="login" disabled="{{inProgress}}">Log in</button><br/>
+          <button on-click="signup" disabled="{{inProgress}}" style="margin-top:32px">Sign up</button>
+        </script>
+
+        <script id="listTemplate" type="text/ractive">
+          <h1>ToDo List</h1>
+          <p>{{msg}}</p>
+          <div>
+            <label>Todo:</label><input type="text" value="{{todo}}"/><button on-click="add" disabled="{{inProgress}}">Add</button>
+          </div>
+          <ul>
+            {{#list}}
+            <li on-click="done:{{.}}">{{get('todo')}}</li>
+            {{/}}
+          </ul>
+        </script>
+      
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/kiisdk.js"></script>
+        <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+        <script type="text/javascript" src="js/ractive.js"></script>
+        <script type="text/javascript" src="js/unserscore-min.js"></script>
+        <script type="text/javascript" src="js/backbone-min.js"></script>        
+        <script type="text/javascript" src="js/app.js"></script>
     </body>
 </html>
